@@ -26,7 +26,8 @@ and $X_0 = 0$, $y_t \sim LogNormal(\log(0.02), 0.2)$, $q=2.5$, and $b=0.4$.
 
 # Questions (we might not get to address all of these)
 
-1. Try to find the best solution you can (maximizing the objective $1/T \sum_{t=1}^T a_t$) which does not allow the lake to eutrophy (exceeding its critical threshold value) with more than 20% probability.
+1. Try to find the best solution you can (maximizing the objective $1/T \sum_{t=1}^T a_t$) which does not allow the lake to eutrophy 
+(exceeding its critical threshold value) with more than 20% probability.
 
     Some things to experiment with:
     * How many Monte Carlo samples are you using?
@@ -34,6 +35,17 @@ and $X_0 = 0$, $y_t \sim LogNormal(\log(0.02), 0.2)$, $q=2.5$, and $b=0.4$.
     * How many function evaluations are you using for the search?
     * What is the impact of different [`Metaheuristics.jl` algorithms](https://docs.juliahub.com/Metaheuristics/aJ70z/3.2.12/algorithms/)?
 
-2. What are the tradeoffs that you notice between these choices, the performance of any found feasible solutions, and speed? What might you recommend?
 
-3. How well does your solution perform against slightly different of $q$, $b$, and/or the variance and mean of $y$? Is the solution reasonably "robust" (in other words, can it satisfy the constraints if your estimate of those parameters is wrong)? How might you decide this?
+```julia 
+
+
+```
+
+
+
+
+2. What are the tradeoffs that you notice between these choices, the performance of any found feasible solutions, and speed?
+ What might you recommend?
+
+3. How well does your solution perform against slightly different of $q$, $b$, and/or the variance and mean of $y$?
+ Is the solution reasonably "robust" (in other words, can it satisfy the constraints if your estimate of those parameters is wrong)? How might you decide this?
