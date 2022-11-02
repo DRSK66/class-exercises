@@ -9,7 +9,8 @@ doctype: md2html
 
 # Background
 
-Due to ongoing economic activity, a town emits phosphorous into a shallow lake (with a concentration of $a_t$), which also receives non-point source runoff (concentration $y_t$) from the surrounding area. The concentration of the lake at time $t+1$ is given by
+Due to ongoing economic activity, a town emits phosphorous into a shallow lake (with a concentration of $a_t$), which also receives non-point source runoff (concentration $y_t$) 
+from the surrounding area. The concentration of the lake at time $t+1$ is given by
 ```math
 X_{t+1} = X_t + a_t + y_t + \frac{X_t^q}{1+X_t^q} - bX_t,
 ```
@@ -35,9 +36,41 @@ and $X_0 = 0$, $y_t \sim LogNormal(\log(0.02), 0.2)$, $q=2.5$, and $b=0.4$.
     * How many function evaluations are you using for the search?
     * What is the impact of different [`Metaheuristics.jl` algorithms](https://docs.juliahub.com/Metaheuristics/aJ70z/3.2.12/algorithms/)?
 
-
 ```julia 
+import Metaheuristics
+using Plots
+using Distributions
+using Random
+using Roots
+random.seed!(1)
 
+q = 2.5
+b = 0.4
+T = 100
+nsamples = 1000
+
+
+lnorm = LogNormal(log(0.03),0.1)
+y = rand(lnorm,(T, nsamples))
+
+crit(x)= (x^q/(1+x^q))- b*x
+Xcrit = find_zero(crit, 0.1,1.5)
+
+
+function lake(a,y,q,b,T)
+    X= zeros(T+1,size(y,2))
+    for t = 1:T
+        X_{t+1} = X_t + a_t + y_t + ({X_t^q}/{1+X_t^q}) - b*X_t
+    end
+    return X
+end
+function lake_opt(a,y,q,b,T, Xcrit)
+    X = lake(a,y,q,b,T)
+
+    Pexceed = sum(X[101,:].>Xcrit)/size(X,2)
+    failconst = [Pexceed - 0.8]
+    return mean(a),failconst, [0.0]
+end
 
 ```
 
